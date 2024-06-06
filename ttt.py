@@ -37,9 +37,49 @@ def move(moves):
             else:
                 boardMat[row][col] = "0 "
         print_board()
+        winner = check()
+        if winner:
+            print(winner)
+            re = input("Do you want a Rematch(y/n)?")
+            rematch(re)
         moves += 1
         x_turn = not x_turn
     return moves
+
+def check():
+   #check row
+    for x in range (3):
+        if boardMat[x][0] ==  boardMat[x][1] ==  boardMat[x][2] != "☐ ":
+            return (f"Player {'1'if boardMat[x][0] == 'X ' else '2'} Win !!")
+
+    #check column
+    for Y in range (3):
+        if boardMat[0][Y] == boardMat[1][Y] == boardMat[2][Y] != "☐ ":
+            return (f"Player {'1' if boardMat[0][Y] == 'X ' else '2'} Win !!")
+    #check diagonal
+    if boardMat[0][0] == boardMat[1][1] == boardMat[2][2] != "☐ ":
+        return (f"Player {'1' if boardMat[0][0] == 'X ' else '2'} Win !!")
+    elif boardMat[0][2] == boardMat[1][1] == boardMat[2][0] != "☐ ":
+        return (f"Player {'1' if boardMat[0][0] == 'X ' else '2'} Win !!")
+    #Check draw
+    allMove = []
+    for x in range(3):
+        for y in range(3):
+            allMove.append(boardMat[x][y])
+    if all(element != "☐ " for element in allMove):
+        return "Match Tied !!!"
+    return None
+
+def rematch(re):
+    re = re.lower()
+    if re == "y":
+        global boardMat
+
+        boardMat = [["☐ ", "☐ ", "☐ "], ["☐ ", "☐ ", "☐ "], ["☐ ", "☐ ", "☐ "]]
+        main()
+
+    else:
+        exit()
 
 def main():
     start()
