@@ -18,32 +18,38 @@ def finished(moves):
 def move(moves):
     x_turn = True
     while not finished(moves):
-        if x_turn:
-            print("It's Player-1 Turn")
-            row, col = input("Enter in x,y Form ").split(",")
-            row, col = int(row), int(col)
-            if boardMat[row][col] == "X " or boardMat[row][col] == "0 ":
-                print("Already Done there")
-                continue
+        try:
+            if x_turn:
+                print("It's Player-1 Turn")
+                row, col = input("Enter in x,y Form ").split(",")
+                row, col = int(row), int(col)
+                if boardMat[row][col] == "X " or boardMat[row][col] == "0 ":
+                    print("Already Done there")
+                    continue
+                else:
+                    boardMat[row][col] = "X "
             else:
-                boardMat[row][col] = "X "
-        else:
-            print("It's Player-2 Turn")
-            row, col = input("Enter in x,y Form ").split(",")
-            row, col = int(row), int(col)
-            if boardMat[row][col] == "X " or boardMat[row][col] == "0 ":
-                print("Already Done there")
-                continue
-            else:
-                boardMat[row][col] = "0 "
-        print_board()
-        winner = check()
-        if winner:
-            print(winner)
-            re = input("Do you want a Rematch(y/n)?")
-            rematch(re)
-        moves += 1
-        x_turn = not x_turn
+                print("It's Player-2 Turn")
+                row, col = input("Enter in x,y Form ").split(",")
+                row, col = int(row), int(col)
+                if boardMat[row][col] == "X " or boardMat[row][col] == "0 ":
+                    print("Already Done there")
+                    continue
+                else:
+                    boardMat[row][col] = "0 "
+            print_board()
+            winner = check()
+            if winner:
+                print(winner)
+                re = input("Do you want a Rematch(y/n)?")
+                rematch(re)
+            moves += 1
+            x_turn = not x_turn
+        except IndexError:
+            print("Enter numbers between 0 and 2 ")
+            continue
+        except ValueError:
+            print("Enter proper Value, ex(1,2)  ")
     return moves
 
 def check():
